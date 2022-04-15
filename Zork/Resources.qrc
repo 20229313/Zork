@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>DungeonFloor.png</file>
+        <file>TreasureChest.png</file>
+        <file>TreasureChestIntr.png</file>
+        <file>TreasureChest1.png</file>
+        <file>GateBlue.png</file>
+        <file>GateBlueIntr.png</file>
+        <file>Map.png</file>
+        <file>GateBlueDown.png</file>
+        <file>GateBlueLeft.png</file>
+        <file>GateBlueRight.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>GateBlue.png</file>
+        <file>GateBlueIntr.png</file>
+        <file>Map.png</file>
+    </qresource>
+</RCC>
