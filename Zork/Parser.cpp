@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include <QTextEdit>
 
 Parser::Parser() {
 	commands = new CommandWords();
@@ -13,7 +14,7 @@ Command* Parser::getCommand() {
 
 	cout << "> "; // print prompt
 
-	getline(cin, buffer, '\n');	// read a line from cin to "buffer"
+    getline(cin , buffer, '\n');	// read a line from cin to "buffer"
 
 	string::size_type pos = 0, last_pos = 0;
 
