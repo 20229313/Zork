@@ -1,20 +1,39 @@
 #include "Room.h"
 #include "Command.h"
+#include <QPushButton>
+#include <QApplication>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
+using namespace std;
+extern int NorthSignal; //global variables
+extern int EastSignal;
+extern int SouthSignal;
+extern int WestSignal;
 
 Room::Room(string description) {
-	this->description = description;
+
+    this->description = description;
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
-	if (north != NULL)
-		exits["north"] = north;
-	if (east != NULL)
+
+    if (north != NULL){
+        exits["north"] = north;
+        NorthSignal = 1;
+    }
+    if (east != NULL){
 		exits["east"] = east;
-	if (south != NULL)
+        EastSignal = 1;
+    }
+    if (south != NULL){
 		exits["south"] = south;
-	if (west != NULL)
-		exits["west"] = west;
+        SouthSignal = 1;
+    }
+    if (west != NULL){
+        exits["west"] = west;
+        WestSignal = 1;
+    }
 }
 
 string Room::shortDescription() {
