@@ -22,9 +22,11 @@ private:
     void displayItems();
 
 public:
+    int ZorkStart();
 	ZorkUL();
 	void play();
 	string go(string direction);
 };
 
 #endif /*ZORKUL_H_*/
+
