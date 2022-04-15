@@ -1,47 +1,56 @@
 #include <iostream>
-
-using namespace std;
+#include "mainwindow.h"
+using namespace std; //namespaces
 #include "ZorkUL.h"
 
-int main(int argc, char argv[]) {
-	ZorkUL temp;
-	temp.play();
-	return 0;
+#include <QApplication>
+
+int MapSignal = 0;
+
+int ZorkStart() {
+    ZorkUL temp;
+    temp.play();
+    return 0;
 }
 
 ZorkUL::ZorkUL() {
 	createRooms();
+
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
+    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l;
 
-    a = new Room("Entrance");
-        a->addItem(new Item("Poke-ball", 1, 25, 1));
-        a->addItem(new Item("Master-ball", 5, 250, 1));
+	a = new Room("a");
+        a->addItem(new Item("x", 1, 11));
+        a->addItem(new Item("y", 2, 22));
 	b = new Room("b");
-        b->addItem(new Item("xx", 3, 33, 0));
-        b->addItem(new Item("yy", 4, 44, 0));
+        b->addItem(new Item("xx", 3, 33));
+        b->addItem(new Item("yy", 4, 44));
 	c = new Room("c");
-	d = new Room("d");
+    d = new Room("d");
 	e = new Room("e");
 	f = new Room("f");
 	g = new Room("g");
 	h = new Room("h");
 	i = new Room("i");
     j = new Room("j");
+    k = new Room("k");
+    l = new Room("l");
 
 //             (N, E, S, W)
-	a->setExits(f, b, d, c);
-	b->setExits(NULL, NULL, NULL, a);
-	c->setExits(NULL, a, NULL, NULL);
-	d->setExits(a, e, NULL, i);
-    e->setExits(NULL, j, NULL, d);
-	f->setExits(NULL, g, a, h);
-	g->setExits(NULL, NULL, NULL, f);
-	h->setExits(NULL, f, NULL, NULL);
-    i->setExits(NULL, d, NULL, NULL);
-    j->setExits(NULL, NULL, NULL, e);
+    a->setExits(NULL, NULL, c, NULL);
+    b->setExits(NULL, c, NULL, NULL);
+    c->setExits(a, d, f, b);
+    d->setExits(NULL, NULL, NULL, d);
+    e->setExits(NULL, NULL, h, f);
+    f->setExits(c, g, NULL, e);
+    g->setExits(NULL, k, j, f);
+    h->setExits(e, i, NULL, NULL);
+    i->setExits(NULL, j, NULL, h);
+    j->setExits(g, NULL, NULL, i);
+    k->setExits(NULL, NULL, l, g);
+    l->setExits(k, NULL, NULL, NULL);
 
         currentRoom = a;
 }
@@ -64,13 +73,14 @@ void ZorkUL::play() {
 		// Free the memory allocated by "parser.getCommand()"
 		//   with ("return new Command(...)")
 		delete command;
+
 	}
 	cout << endl;
 	cout << "end" << endl;
 }
 
 void ZorkUL::printWelcome() {
-	cout << "start"<< endl;
+    cout << "start"<< endl; //overloading operators as << is really a bitwise operator
 	cout << "info for help"<< endl;
 	cout << endl;
 	cout << currentRoom->longDescription() << endl;
@@ -84,7 +94,7 @@ void ZorkUL::printWelcome() {
 bool ZorkUL::processCommand(Command command) {
 	if (command.isUnknown()) {
 		cout << "invalid input"<< endl;
-		return false;
+        return true;
 	}
 
 	string commandWord = command.getCommandWord();
@@ -93,14 +103,8 @@ bool ZorkUL::processCommand(Command command) {
 
 	else if (commandWord.compare("map") == 0)
 		{
-        cout << "[h] --- [f] --- [g]" << endl;
-		cout << "         |         " << endl;
-        cout << "         |         " << endl;
-		cout << "[c] --- [a] --- [b]" << endl;
-		cout << "         |         " << endl;
-		cout << "         |         " << endl;
-        cout << "[i] --- [d] --- [e] --- [j]" << endl;
-		}
+    MapSignal = 1;
+    }
 
 	else if (commandWord.compare("go") == 0)
 		goRoom(command);
@@ -186,4 +190,12 @@ string ZorkUL::go(string direction) {
 		currentRoom = nextRoom;
 		return currentRoom->longDescription();
 	}
+}
+
+int main(int argc, char *argv[]) {
+    ZorkStart();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
